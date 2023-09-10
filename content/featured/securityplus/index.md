@@ -1,7 +1,7 @@
 ---
 date: '2'
 title: 'CompTIA Security+ Certification'
-cover: 'security.png'
+cover: 'comptia.png'
 #github: ''
 external: 'https://www.credly.com/badges/5e2eac92-39e3-4c69-9a33-27f873784a63'
 tech:
