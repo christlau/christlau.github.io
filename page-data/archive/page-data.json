@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-pages-archive-js",
+    "path": "/archive/",
+    "result": {"data":{"allMarkdownRemark":{"edges":[{"node":{"frontmatter":{"date":"2019-04-30","title":"Student Management System","tech":["Java","Sqlite"],"external":"","company":""},"html":"<p>Java Swing based project with MySQL database developed using Netbeans IDE</p>"}}]}},"pageContext":{}},
+    "staticQueryHashes": ["3115057458"]}
