@@ -17,14 +17,21 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '16'
         cache: 'yarn'
         
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential python3-dev
+        
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: yarn install --legacy-peer-deps
       
-    - name: Build
-      run: yarn build
+    - name: Clean cache and build
+      run: |
+        yarn clean
+        GATSBY_CPU_COUNT=1 yarn build
       
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
