@@ -1,41 +1,48 @@
-name: Build and Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      
-    - name: Setup Node.js
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Node.js 14
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '14.21.3'
         
-    - name: Install dependencies with npm
-      run: |
-        rm -f yarn.lock
-        npm install --legacy-peer-deps --ignore-scripts
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
         
-    - name: Build site
+    - name: Cache yarn dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+          
+    - name: Install and build
       run: |
-        npx gatsby clean
-        NODE_OPTIONS="--max-old-space-size=4096" npx gatsby build
+        yarn install --frozen-lockfile --network-timeout 1000000
+        yarn build
       env:
         NODE_ENV: production
         GATSBY_CPU_COUNT: 1
-      
-    - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
+        
+    - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
         publish_branch: master
+        force_orphan: true
