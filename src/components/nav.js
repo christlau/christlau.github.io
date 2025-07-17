@@ -6,6 +6,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { throttle } from '@utils';
 import { navLinks, navHeight } from '@config';
 import { Menu } from '@components';
+import DarkModeToggle from './DarkModeToggle';
 import { IconLogo } from '@components/icons';
 import styled from 'styled-components';
 import { theme, mixins, media } from '@styles';
@@ -299,6 +300,7 @@ class Nav extends Component {
                       rel="nofollow noopener noreferrer">
                       Resume
                     </StyledResumeButton>
+                    <DarkModeToggle />
                   </div>
                 </CSSTransition>
               )}

@@ -6,16 +6,23 @@
    npm install -g gatsby-cli
    ```
 
-2. Install and use the correct version of Node using [NVM](https://github.com/nvm-sh/nvm)
+2. Install and use the Node version defined in `.nvmrc`
 
    ```sh
-   nvm install
+   nvm install $(cat .nvmrc)
+   nvm use $(cat .nvmrc)
    ```
 
 3. Install dependencies
 
    ```sh
-   yarn
+   npm install --legacy-peer-deps
+   ```
+
+   If you see a warning like `mise WARN deprecated [idiomatic_version_file_enable_tools]`, run:
+
+   ```sh
+   mise trust .mise.toml
    ```
 
 4. Start the development server
