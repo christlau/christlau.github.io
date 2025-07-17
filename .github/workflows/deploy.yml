@@ -18,18 +18,19 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '16'
-        cache: 'yarn'
         
-    - name: Install dependencies (skip optional)
-      run: yarn install --ignore-optional --legacy-peer-deps
-      
-    - name: Clean and build with fallback datastore
+    - name: Install dependencies with npm
       run: |
-        yarn clean
-        GATSBY_CPU_COUNT=1 GATSBY_EXPERIMENTAL_LMDB_STORE=0 yarn build
+        rm -f yarn.lock
+        npm install --legacy-peer-deps --ignore-scripts
+        
+    - name: Build site
+      run: |
+        npx gatsby clean
+        NODE_OPTIONS="--max-old-space-size=4096" npx gatsby build
       env:
         NODE_ENV: production
-        GATSBY_EXPERIMENTAL_LMDB_STORE: 0
+        GATSBY_CPU_COUNT: 1
       
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
