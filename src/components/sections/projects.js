@@ -146,12 +146,7 @@ const Projects = ({ data }) => {
 
   return (
     <StyledContainer>
-      
-    </StyledContainer>
-  );
-};
-/*INSIDE STYLED CONTAINER
-<StyledTitle ref={revealTitle}>Other Noteworthy Projects</StyledTitle>
+      <StyledTitle ref={revealTitle}>Other Noteworthy Projects</StyledTitle>
       <StyledArchiveLink to="/archive" ref={revealArchiveLink}>
         View Complete List of Projects/Codes
       </StyledArchiveLink>
@@ -221,11 +216,14 @@ const Projects = ({ data }) => {
             })}
         </TransitionGroup>
       </StyledGrid>
-
-
-
-
-*/
+      {projects.length > GRID_LIMIT && (
+        <StyledMoreButton onClick={() => setShowMore(!showMore)}>
+          Show {showMore ? 'Less' : 'More'}
+        </StyledMoreButton>
+      )}
+    </StyledContainer>
+  );
+};
 
 Projects.propTypes = {
   data: PropTypes.array.isRequired,

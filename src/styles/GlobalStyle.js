@@ -47,6 +47,10 @@ const GlobalStyle = createGlobalStyle`
         user-select: none;
       }
     }
+    &.light {
+      background-color: ${colors.white};
+      color: ${colors.darkNavy};
+    }
   }
 
   ::selection {
